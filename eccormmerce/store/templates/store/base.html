@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bold Store - Modern E-Commerce{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}">
+
+    <style>
+        /* Additional inline animations */
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-brand">
+            <span></span>
+            <a href="/" style="color: white; text-decoration: none;">Bold Store</a>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/products/">Products</a></li>
+            <li>
+                <a href="/cart/" class="cart-icon">
+                    <span>🛒</span>
+                    <span class="cart-count">{{ cart_count|default:0 }}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Bold Store. All rights reserved.</p>
+        <p>Crafted with <span style="color: var(--accent-green);">❤</span> for bold shoppers</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{% static 'store/js/app.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

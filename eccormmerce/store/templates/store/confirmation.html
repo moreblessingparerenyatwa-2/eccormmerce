@@ -1,0 +1,75 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Order Confirmed - Bold Store{% endblock %}
+
+{% block content %}
+
+<div class="confirmation-container">
+    <!-- Success Icon -->
+    <div class="success-icon">✓</div>
+    
+    <!-- Main Message -->
+    <h1>Order Confirmed!</h1>
+    <p>Thank you for your order. We're thrilled you chose Bold Store!</p>
+
+    <!-- Order Details -->
+    <div class="order-details">
+        <div class="order-detail-row">
+            <span class="order-detail-label">Order Number:</span>
+            <span class="order-detail-value">#{{ order.id }}</span>
+        </div>
+        
+        <div class="order-detail-row">
+            <span class="order-detail-label">Order Date:</span>
+            <span class="order-detail-value">{{ order.created_at|date:"F j, Y" }}</span>
+        </div>
+        
+        <div class="order-detail-row">
+            <span class="order-detail-label">Email:</span>
+            <span class="order-detail-value">{{ order.email }}</span>
+        </div>
+        
+        <div class="order-detail-row">
+            <span class="order-detail-label">Delivery Address:</span>
+            <span class="order-detail-value">{{ order.address }}, {{ order.city }}</span>
+        </div>
+    </div>
+
+    <!-- Order Items -->
+    <h3 style="margin-bottom: 1rem; color: var(--accent-green);">Order Items</h3>
+    <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 15px; padding: 1.5rem; backdrop-filter: blur(10px); margin-bottom: 2rem;">
+        {% for item in order_items %}
+        <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(34, 197, 94, 0.1); align-items: center;">
+            <div>
+                <p style="font-weight: 600;">{{ item.product.name }}</p>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Qty: {{ item.quantity }}</p>
+            </div>
+            <span style="color: var(--accent-green); font-weight: 700;">${{ item.product.price }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Next Steps -->
+    <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 15px; padding: 1.5rem; margin-bottom: 2rem;">
+        <h3 style="margin-bottom: 1rem;">What's Next?</h3>
+        <ul style="list-style: none; padding: 0; color: var(--text-secondary);">
+            <li style="padding: 0.5rem 0;">✓ We're processing your order</li>
+            <li style="padding: 0.5rem 0;">✓ A confirmation email has been sent to {{ order.email }}</li>
+            <li style="padding: 0.5rem 0;">✓ You'll receive tracking information soon</li>
+            <li style="padding: 0.5rem 0;">✓ Estimated delivery: 3-5 business days</li>
+        </ul>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+        <a href="/" class="btn-secondary">Back to Home</a>
+        <a href="/products/" class="btn-primary">Continue Shopping</a>
+    </div>
+
+    <!-- Contact Info -->
+    <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(34, 197, 94, 0.2); color: var(--text-secondary); font-size: 0.9rem;">
+        <p>Have questions? Contact us at support@boldstore.com</p>
+    </div>
+</div>
+
+{% endblock %}

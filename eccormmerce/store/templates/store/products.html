@@ -1,0 +1,68 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Products - Bold Store{% endblock %}
+
+{% block content %}
+
+<section class="container" style="padding: 3rem 2rem;">
+    <h1 class="section-title">Our <span>Products</span></h1>
+
+    <!-- Filters & Search -->
+    <div class="filters">
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search products (Ctrl+K)..." />
+        </div>
+        
+        <button class="filter-btn {% if not selected_category %}active{% endif %}" data-category="all">
+            All Products
+        </button>
+        
+        {% for category in categories %}
+        <button class="filter-btn {% if category == selected_category %}active{% endif %}" 
+                data-category="{{ category }}">
+            {{ category|title }}
+        </button>
+        {% endfor %}
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid" id="products">
+        {% for product in products %}
+        <div class="card" data-category="{{ product.category }}">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-image">
+            {% else %}
+            <div class="card-image" style="background: linear-gradient(135deg, #22c55e, #10b981); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
+                📦
+            </div>
+            {% endif %}
+            
+            <div class="card-content">
+                <h3 class="card-title">{{ product.name }}</h3>
+                
+                {% if product.description %}
+                <p class="card-description">{{ product.description|truncatewords:10 }}</p>
+                {% else %}
+                <p class="card-description">High quality product</p>
+                {% endif %}
+                
+                <div style="margin-top: auto;">
+                    <p class="card-price">{{ product.price }}</p>
+                    <a href="/add/{{ product.id }}/" class="btn-primary btn-small btn-add-cart" 
+                       data-product-id="{{ product.id }}" style="display: block; text-align: center;">
+                        Add to Cart
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-state" style="grid-column: 1 / -1;">
+            <h2>No Products Found</h2>
+            <p>Try adjusting your filters or search terms</p>
+            <a href="/products/" class="btn-primary">View All</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
